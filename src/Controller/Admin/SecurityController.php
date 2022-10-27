@@ -61,6 +61,7 @@ class SecurityController extends AbstractController
             $this->em->persist($account);
             $this->em->flush();
 
+
             $body = $this->renderView('email/newaccount.html.twig', [
                 'name' => $account->getGivenName(),
                 'account' => $account,
@@ -68,6 +69,7 @@ class SecurityController extends AbstractController
             ]);
 
             $mailer->message($account, 'Jouw account', $body);
+
 
             return $this->redirectToRoute('admin_security_show', ['id' => $account->getId()]);
         }
