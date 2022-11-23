@@ -55,6 +55,14 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository(LocalAccount::class);
+
+            return $this->render('admin/security/new.html.twig', [
+                'account' => $account,
+                'form' => $form->createView(),
+            ]);
+
             $token = $passwordReset->generatePasswordRequestToken($account);
             $account->setPasswordRequestedAt(null);
 
